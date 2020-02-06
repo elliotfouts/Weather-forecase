@@ -1,0 +1,13 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Fjalla One', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: currentColor;
+}
