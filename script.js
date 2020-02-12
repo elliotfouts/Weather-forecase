@@ -5,16 +5,18 @@ var nameElement = $("#name");
 var dateElement = $("#date");
 var titleContainerElement = $("#title-container");
 var titleElement = $("#title");
-var subtitleElement = $("#subtitle");
 var searchbarContainerElement = $("#searchbar-container");
 var searcbarElement = $("#searchbar");
 var searchbarInput = $("#searchbar-input");
 var recentSearchesBtnElement = $("#recent-searches-button");
+var forecastBtnElement = $("#forecast-button");
+var recentSearchContainer = $(".recent-search-actual-container");
 // variables to store weather data
 var city = "los angeles";
 var currentDate = moment().format('MMMM Do YYYY');
 var currentWeather = 0;
 var currentIcon;
+var currentTempKelvin;
 var currentTemp;
 var currentHumidity;
 var currentWindspeed;
@@ -24,6 +26,30 @@ var twoDaysAhead;
 var threeDaysAhead;
 var fourDaysAhead;
 var fiveDaysAhead;
+var latitude;
+var longitude;
+localStorage.setItem("city", "los angeles")
+var recentSearches = JSON.parse(localStorage.getItem("cityArr"));
+if (recentSearches == null) {
+    recentSearches = [];
+}
+
+var newSearchElement;
+// updates recent searches
+
+for (var i = recentSearches.length - 1; i > 0; i--) {        
+    newSearchElement = $("<h2>");
+    newSearchElement.addClass("recent-search");
+    newSearchElement.text(recentSearches[i]);
+    recentSearchContainer.append(newSearchElement)
+}
+
+// updates conditions 
+conditionsArr = $(".conditions");
+var tempDisplay = conditionsArr.eq(0);
+var humidityDisplay = conditionsArr.eq(1);
+var windspeedDisplay = conditionsArr.eq(2);
+var uvIndexDisplay = conditionsArr.eq(3);
 
 // grabs current conditions
 $.ajax ({
@@ -33,13 +59,23 @@ $.ajax ({
     currentName = response.name;
     currentWeather = response.weather[0].description;
     currentIcon = response.weather[0].icon;
-    currentTemp = response.main.temp;
+    currentTempKelvin = response.main.temp;
+    currentTemp = Math.floor((currentTempKelvin * (9/5)) - 459.67);
     currentHumidity = response.main.humidity;
     currentWindspeed = response.wind.speed;
     currentUvIndex;   
+    longitude = response.coord.lon;
+    latitude = response.coord.lat;
+
+    console.log(currentWeather);
     // updates initial location weather
     nameElement.text(currentName);
     dateElement.text(currentDate);
+
+    // updates conditions 
+    tempDisplay.text(currentTemp + "°F");
+    humidityDisplay.text("humidity: " + currentHumidity + "%");
+    windspeedDisplay.text("wind: " + currentWindspeed + "mph");
 
     // changes animation based on weather / location
     rainOn = false;
@@ -60,19 +96,78 @@ $.ajax ({
         $("#clouds2").addClass("clouds2");
     } else if (currentWeather == "clear sky") {
         $("#sun").addClass("sun");
-    } 
+        console.log("Clear sky")
+    } else {
+        $(".icon").attr("src", "http://openweathermap.org/img/wn/" + currentIcon + "@2x.png");
+        console.log("hello")
+    }
+
+    // get UV index
+    $.ajax ({
+        url: "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=0472082bda1b802cb6c0a01644c95eb4",
+        method: "GET"
+    }).then (function (response) {
+        currentUvIndex = response.value;
+
+        uvIndexDisplay.text("UV Index: " + currentUvIndex);
+    })
 });
 
-var searchTerm;
+
+// opens and updates recent searches 
+
+recentSearchesBtnElement.click(function(){
+    $(".recent-search-container").addClass("open");
+})
+
+$(".recent-search-close").click(function(){
+    $(".recent-search-container").removeClass("open"); 
+})
+
+
 // grabs search conditions 
+var searchTerm;
 $(".fa-search").click(function() {
     searchTerm = $("#searchbar-input").val();
+    if (searchTerm == ""){
+        return;
+    }
+    localStorage.setItem("city", searchTerm);
+    recentSearches.push(searchTerm);
+    while (recentSearches.length > 8) {
+        recentSearches.shift()
+    }
+    console.log(recentSearches)
+    localStorage.setItem("cityArr", JSON.stringify(recentSearches));
     updateCurrent(searchTerm);
+    $("#searchbar-input").val("");
+
+    // updates recent searches 
+    $(".recent-search-actual-container").empty();
+    for (var i = recentSearches.length - 1; i > 0; i--) {        
+        newSearchElement = $("<h2>");
+        newSearchElement.addClass("recent-search");
+        newSearchElement.text(recentSearches[i]);
+        recentSearchContainer.append(newSearchElement)
+    }
+})
+
+// searches recent search 
+recentSearchContainer.click(function(event) {
+    var recentSearchElements = $(".recent-search");
+    var target = event.target;
+    for (var i = 0; i < recentSearchElements.length; i++) {
+        if (event.target == recentSearchElements[i]) {
+            updateCurrent(target.innerText)
+            $(".recent-search-container").removeClass("open"); 
+        }
+    }
 })
 
 
 
 function updateCurrent(cityUpdate) {
+
     $.ajax ({
         url: "https://api.openweathermap.org/data/2.5/weather?q=" + cityUpdate + "&appid=0472082bda1b802cb6c0a01644c95eb4",
         method: "GET"
@@ -87,8 +182,6 @@ function updateCurrent(cityUpdate) {
         // updates initial location weather
         nameElement.text(currentName);
         dateElement.text(currentDate);
-
-        console.log(currentWeather);
     
         // changes animation based on weather / location
         rainOn = false;
@@ -98,7 +191,7 @@ function updateCurrent(cityUpdate) {
         $("#clouds2").removeClass();
         $("canvas").attr("style", "background: #0095da;")
         $("body").attr("style", "color: #444;")
-        if (currentWeather == "light rain" || currentWeather == "	light intensity drizzle" || currentWeather == "drizzle" || currentWeather == "heavy intensity drizzle" || currentWeather == "light intensity drizzle rain" || currentWeather == "drizzle rain" || currentWeather == "heavy intensity drizzle rain" || currentWeather == "shower rain and drizzle" || currentWeather == "heavy shower rain and drizzle" || currentWeather == "shower drizzle" || currentWeather == "light rain" || currentWeather == "moderate rain" || currentWeather == "heavy intensity rain" || currentWeather == "very heavy rain" || currentWeather == "extreme rain" || currentWeather == "freezing rain" || currentWeather == "light intensity shower rain" || currentWeather == "shower rain" || currentWeather == "heavy intensity shower rain" || currentWeather == "ragged shower rain") {
+        if (currentWeather == "light rain" || currentWeather == "light intensity drizzle" || currentWeather == "drizzle" || currentWeather == "heavy intensity drizzle" || currentWeather == "light intensity drizzle rain" || currentWeather == "drizzle rain" || currentWeather == "heavy intensity drizzle rain" || currentWeather == "shower rain and drizzle" || currentWeather == "heavy shower rain and drizzle" || currentWeather == "shower drizzle" || currentWeather == "light rain" || currentWeather == "moderate rain" || currentWeather == "heavy intensity rain" || currentWeather == "very heavy rain" || currentWeather == "extreme rain" || currentWeather == "freezing rain" || currentWeather == "light intensity shower rain" || currentWeather == "shower rain" || currentWeather == "heavy intensity shower rain" || currentWeather == "ragged shower rain") {
             rainOn = true;
             rainAnimation();
             $("canvas").attr("style", "background: #00496b;")
@@ -111,26 +204,10 @@ function updateCurrent(cityUpdate) {
             $("#clouds2").addClass("clouds2");
         } else if (currentWeather == "clear sky") {
             $("#sun").addClass("sun");
-        } 
+        } else {
+            $(".icon").attr("src", "http://openweathermap.org/img/wn/" + currentIcon + "@2x.png");
+        }
     });
-}
-
-function updateForecast() {
-    var weather;
-    var humidity;
-    var icon;
-    var temp;
-    var windspeed;
-    var uvIndex
-    for (var i = 0; i < forecastArr.length; i++) {
-        weather = forecastArr[i].weather[0].description;
-        humidity = forecastArr[i].main.humidity;
-        temp = forecastArr[i].main.temp;
-        windspeed = forecastArr[i].wind.speed;
-        uvIndex;
-
-
-    }
 }
 
 
@@ -257,5 +334,3 @@ function rainAnimation () {
     }
 }
 rainAnimation();
-
-//changes animation based on forecast 

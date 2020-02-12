@@ -9,6 +9,7 @@ body {
     background: transparent;
     color: #444;
     font-family: 'Fjalla One', sans-serif;
+    overflow: hidden;
 }
 
 a {
@@ -25,6 +26,17 @@ a {
     width: 100%;
     position: relative;
     z-index: 100;
+}
+
+.conditions {
+    font-size: 1.2rem;
+}
+
+.icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /*===========================================
@@ -144,6 +156,53 @@ a {
     color: #eee;
 }
 
+
+.recent-search-container {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    height: 100%;
+    width: 50%;
+    z-index: 200;
+    background: #eee;
+    transition: all 500ms;
+    color: #444;
+    padding: 3rem;
+}
+
+.open {
+    right: 0;
+}
+
+.recent-search-actual-container {
+    padding: 1rem;
+}
+
+.recent-search {
+    font-size: 2rem;
+    padding: 1rem;
+    margin: 1rem;
+    width: 100%;
+    background: #eee;
+    text-align: center;
+    border: 1px #444 solid;
+    transition: all 300ms;
+}
+
+
+.recent-search:hover {
+    cursor: pointer;
+}
+
+.recent-search-close {
+    text-align: center;
+    top: 0;
+    left: 0;
+    padding: 1rem 2rem;
+    background: #444;
+    color: #eee;
+    margin: 1rem;
+}
 
 /*=============================================
 *               forecast container            *

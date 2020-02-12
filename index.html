@@ -22,11 +22,12 @@
     <script src="script.js"></script>
     <div id="search-container">
         <div id="searchbar-container">
-            <div id="searchbar">
-                <input id="searchbar-input" placeholder="city name..." type="text">
-                <i class="fas fa-search fa-2x"></i>
-            </div>
+            <a href="forecast.html" id="forecast-button">See forecasts</a>
 
+            <p class="conditions"></p>
+            <p class="conditions"></p>
+            <p class="conditions"></p>
+            <p class="conditions">UV index:</p>
             <a href="#" id="recent-searches-button">See recent searches</a>
         </div>
         <div id="title-container">
@@ -35,10 +36,20 @@
         </div>
         <div id="date-place-container">
             <h3 id="name"></h3>
-            <a href="forecast.html" id="forecast-button">See forecasts</a>
+            <div id="searchbar">
+                <input id="searchbar-input" placeholder="city name..." type="text">
+                <i class="fas fa-search fa-2x"></i>
+            </div>
             <h3 id="date"></h3>
         </div>
     </div>
+    
+    <div class="recent-search-container">
+        <a href="#" class="recent-search-close">Close</a>
+        <div class="recent-search-actual-container">
+        </div>
+    </div>
+    <img src="#" alt="" class="icon">
 
 
     <script src="script.js"></script>
