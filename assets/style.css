@@ -1,0 +1,98 @@
+/* global attributes */
+*, 
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: currentColor;
+}
+
+/* background */
+
+canvas {
+  background: #0095da;
+  /* background: #00496b; */
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* main section */
+
+main {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#data {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: 1rem 1rem 3rem rgba(0, 0, 0, 0.3);
+}
+
+
+
+/* bottom menu */
+
+menu {
+  background: #fff;
+  height: 100%;
+}
+
+menu .col-sm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+#date-container, 
+#date {
+  display: none;
+}
+
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  main {
+    height: 90vh;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  main {
+    justify-content: flex-start;
+  }
+
+  .card {
+    margin: 3rem;
+  }
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  #date-container, 
+  #date {
+    text-align: center;
+    display: inline-block;
+  } 
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
