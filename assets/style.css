@@ -10,17 +10,17 @@ a {
   color: currentColor;
 }
 
-/* background */
-
-canvas {
-  background: #0095da;
-  /* background: #00496b; */
-  height: 100vh;
-  width: 100%;
+.alert {
   position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
+  top: 20px;
+  left: 50%;
+  width: 80%;
+  transform: translateX(-50%);
+}
+
+.container-fluid {
+  position: relative;
+  z-index: 5;
 }
 
 /* main section */
@@ -31,7 +31,9 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5;
 }
+
 
 #data {
   display: flex;
@@ -46,21 +48,142 @@ main {
 
 menu {
   background: #fff;
-  height: 100%;
+  height: 20vh;
+  z-index: 5;
+}
+
+#search-button:hover {
+  cursor: pointer;
 }
 
 menu .col-sm {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
 }
 
-#date-container, 
-#date {
+#date-container {
   display: none;
 }
 
+
+/* animations */
+
+canvas {
+  background: #0095da;
+  /* background: #00496b; */
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.sun {
+  height: 200px; 
+  width: 200px;
+  background: #e6e600;
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  z-index: 2;
+  border-radius: 50%;
+  box-shadow:
+      0 0 0 20px rgb(235, 235, 46),
+      0 0 0 40px rgb(230, 230, 97),
+      0 0 0 60px rgb(233, 233, 141),
+      0 0 20px 60px rgb(226, 226, 115);
+  animation: sunshine 2s infinite linear alternate, rays 2s 2s infinite linear alternate;
+}
+/* clouds */
+.clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 2;
+  background: url("cloud.png");
+  background-size: cover;
+  animation-name: cloudAnimate;
+  animation-duration: 60s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+}
+.clouds2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 1;
+  background: url("cloud.png");
+  background-size: cover;
+  animation-name: cloudAnimate2;
+  animation-duration: 60s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+}
+.clouds3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 1;
+  background: url("cloud.png");
+  background-size: cover;
+  animation-name: cloudAnimate3;
+  animation-duration: 60s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+}
+@keyframes sunshine {
+  0%{
+      box-shadow: none;
+  }
+}
+@keyframes rays {
+  0% {
+      box-shadow:
+      0 0 0 20px rgb(235, 235, 46),
+      0 0 0 40px rgb(230, 230, 97),
+      0 0 0 60px rgb(233, 233, 141),
+      0 0 20px 60px rgb(226, 226, 115);
+  }
+}
+
+@keyframes cloudAnimate {
+  0% {
+      background-position: 0px;
+  }
+  100% {
+      background-position: 5000px;
+  }
+}
+@keyframes cloudAnimate2 {
+  0% {
+      background-position: 500px;
+  }
+  100% {
+      background-position: 4500px;
+  }
+}
+@keyframes cloudAnimate3 {
+  0% {
+      background-position: 200px;
+  }
+  100% {
+      background-position: 3000px;
+  }
+}
+
+
+/* media queries */
 
 
 /* Small devices (landscape phones, 576px and up) */
@@ -68,12 +191,18 @@ menu .col-sm {
   main {
     height: 90vh;
   }
+  menu {
+    height: 10vh;
+  }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   main {
     justify-content: flex-start;
+  }
+  .alert {
+    width: 40%;
   }
 
   .card {
@@ -84,12 +213,12 @@ menu .col-sm {
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-  #date-container, 
-  #date {
-    text-align: center;
-    display: inline-block;
+  #date-container {
+    display: flex;
   } 
-
+  .alert {
+    width: 30%;
+  }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */

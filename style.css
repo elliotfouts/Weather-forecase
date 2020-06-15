@@ -260,7 +260,7 @@ canvas {
     left: 0;
     height: 100vh;
     width: 100%;
-    z-index: 2;
+    z-index: 0;
     background: url("cloud.png");
     background-size: cover;
     animation-name: cloudAnimate3;
