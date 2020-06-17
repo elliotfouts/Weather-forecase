@@ -1,7 +1,6 @@
 let rainOn = false;
 let snowOn = false;
 const animateBackground = (currentWeather, icon) => {
-	console.log(currentWeather);
 	$('#sun').removeClass();
 	$('#clouds').removeClass();
 	$('#clouds2').removeClass();

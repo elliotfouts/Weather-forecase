@@ -42,7 +42,14 @@ main {
   box-shadow: 1rem 1rem 3rem rgba(0, 0, 0, 0.3);
 }
 
+#data-forecast {
+  display: none;
+}
 
+#data-forecast .row {
+  padding: 0rem 1rem;
+  justify-content: space-between;
+}
 
 /* bottom menu */
 

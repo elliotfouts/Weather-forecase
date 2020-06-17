@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="assets/reset.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="assets/style.css">
-  <title>Document</title>
+  <title>Weather Tracker</title>
 </head>
 <body>
   <canvas></canvas>
@@ -18,15 +18,56 @@
   <div class="container-fluid"> 
     <main>
         <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <img src="#" alt="" class="icon">
-            <h3 class="card-title">The Numbers</h3>
-            <p class="card-text"><span id="temperature"></span></p>
-            <p class="card-text">Humidity: <span id="humidity"></span>%</p>
-            <p class="card-text">Wind Speed: <span id="wind"></span> mph</p>
-            <p class="card-text">UV Index: <span id="uv-index">10.12</span></p>
-            <a href="#" class="btn btn-primary">See Forecast</a>
+          <div class="card-body" id="data-current">
+              <img src="#" alt="" class="icon">
+              <h3 class="card-title">The Numbers</h3>
+              <p class="card-text"><span id="temperature"></span></p>
+              <p class="card-text">Humidity: <span id="humidity"></span>%</p>
+              <p class="card-text">Wind Speed: <span id="wind"></span> mph</p>
+              <p class="card-text">UV Index: <span id="uv-index">10.12</span></p>
+              <a href="#" id="display-forecast" class="btn btn-primary">See Forecast</a>
           </div>
+          <div id="data-forecast">
+            <div class="card-header">
+              Forecast
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <div class="row">
+                  <h5 class="forecast-date">June 16th</h5>
+                  <p class="forecast-description">icon</p>
+                </div>
+                <div class="row">
+                  <p>temp: <span class="forecast-temperature"></span>˚</p>
+                  <p>humidity: <span class="forecast-humidity"></span>%</p>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="row">
+                  <h5 class="forecast-date">June 16th</h5>
+                  <p class="forecast-description">icon</p>
+                </div>
+                <div class="row">
+                  <p>temp: <span class="forecast-temperature"></span>˚</p>
+                  <p>humidity: <span class="forecast-humidity"></span>%</p>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="row">
+                  <h5 class="forecast-date">June 16th</h5>
+                  <p class="forecast-description">icon</p>
+                </div>
+                <div class="row">
+                  <p>temp: <span class="forecast-temperature"></span>˚</p>
+                  <p>humidity: <span class="forecast-humidity"></span>%</p>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <a href="#" id="display-current" class="btn btn-primary">See Current</a>
+              </li>
+            </ul>
+          </div>
+
         </div>
     </main>
   
